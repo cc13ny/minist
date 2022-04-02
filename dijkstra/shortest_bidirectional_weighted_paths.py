@@ -1,5 +1,16 @@
 """
-bi-directional, weighted
+bi-directional, positive weighted graph
+
+TODO:
+1. Detect circles.
+2. The weights include negative values.
+3. use func(weight) when two nodes are connected (e.g. by multiplication).
+4. Refactor the codes
+   - test cases
+   - initialization
+   - reduce duplicate codes
+5. Extensible and Modularized
+
 """
 
 import collections
@@ -7,12 +18,12 @@ import heapq
 from typing import List
 
 
-class WeightedPathsAlgorithms:
+class WeightedPathsAlgorithms(object):
 
     def __init__(self, weights: List[tuple]):
         self.weights = weights
-        self.min_dists = []
-        self.prevs = []
+        self.min_dists = {}
+        self.prevs = {}
 
     def _build_adj_list(self):
         adj_list = collections.defaultdict(list)
@@ -23,7 +34,7 @@ class WeightedPathsAlgorithms:
 
     # Dijkstra's algorithm
     # Note: O((V+E) log (V+E)) instead of O((V+E) log (V)) because the lack of 'sift down'
-    def build_shortest_weighted_pathes(self, start: int) -> None:
+    def build_shortest_weighted_paths(self, start: int) -> None:
         adj_list = self._build_adj_list()
         self.start = start  # ToDO: fix 'instance attribute start defined outside __init__'
 
@@ -138,7 +149,7 @@ if __name__ == '__main__':
 
     algs1 = WeightedPathsAlgorithms(weights1)
     start1, end1 = 1, 5
-    algs1.build_shortest_weighted_pathes(start1)
+    algs1.build_shortest_weighted_paths(start1)
     print("Shortest Paths:")
     print(algs1.get_mini_dists())
     print("Previous Vertex in the shortest paths:")
@@ -160,7 +171,7 @@ if __name__ == '__main__':
 
     algs2 = WeightedPathsAlgorithms(weights2)
     start2, end2 = 1, 4
-    algs2.build_shortest_weighted_pathes(start2)
+    algs2.build_shortest_weighted_paths(start2)
     print("Shortest Paths:")
     print(algs2.get_mini_dists())
     print("Previous Vertex in the shortest paths:")
